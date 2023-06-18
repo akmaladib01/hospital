@@ -2,6 +2,7 @@ package my.project.dad.hospital.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -112,5 +113,25 @@ public class PatientMenuController {
 		model.addAttribute("pageTitle",pageTitle);
 
 		return "new_patient";
+	}
+	
+	/**
+	*This method deletes an order type
+	*
+	* @param orderTypeld
+	* @return
+	*/
+	@RequestMapping("/patient/delete/{patient_id}")
+	public String deletePatient(@PathVariable Integer patient_id) {
+		
+		// Generate new URI, similar to the mapping in OrderTypeRESTController
+		String uri = defaultURI + "/{patient_id}";
+
+		// Send a DELETE request and attach the value of orderTypeId into URI
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.delete(uri,Map.of("patient_id", Integer.toString(patient_id)));
+
+		return "redirect:/patient/list";
+
 	}
 }

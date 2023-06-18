@@ -57,13 +57,16 @@
             </div>
           </div>
 
-<div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="patient_gender">Gender</label>
-            <div class="col-sm-9">
-              <input type="text" th:field="*{patient_gender}" minlength="1" maxlength="1" class="form-control"
-                id="patient_gender" />
-            </div>
-          </div>
+	<div class="form-group row">
+  <label class="col-sm-3 col-form-label" for="patient_gender">Gender</label>
+  <div class="col-sm-9">
+    <select th:field="*{patient_gender}" class="form-control" id="patient_gender">
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+  </div>
+</div>
 
           <div class="text-center">
             <input type="submit" value="Save" class="btn btn-primary btn-sm mr-2" />

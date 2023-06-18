@@ -3,14 +3,17 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
   <title>REST Consumer</title>
 
+  <!-- CSS stylesheets -->
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
     integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- JavaScript libraries -->
   <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
   <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
@@ -21,6 +24,7 @@
   <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
     <h2 class="text-center">List of Patient</h2>
 
+    <!-- Success message -->
     <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
       role="alert">
       [[${message}]]
@@ -29,6 +33,7 @@
       </button>
     </div>
 
+    <!-- Patient table -->
     <div th:if="${patient.size() > 0}">
       <table class="table table-hover table-responsive-xl">
         <thead class="thead-light">
@@ -39,42 +44,38 @@
             <th scope="col">Address</th>
             <th scope="col">Age</th>
             <th scope="col">Gender</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-        
-        <tr th:each="patients : ${patient}">
-            <td th:text="${patients.patient_id}"></td>
-            <td th:text="${patients.patient_name}"></td>
-            <td th:text="${patients.patient_phone}"></td>
-            <td th:text="${patients.patient_address}"></td>
-            <td th:text="${patients.patient_age}"></td>
-            <td th:text="${patients.patient_gender}"></td>
+          <!-- Iterate over patient list -->
+          <tr th:each="patients : ${patient}">
+            <th scope="row">[[${patients.patient_id}]]</th>
+            <td>[[${patients.patient_name}]]</td>
+            <td>[[${patients.patient_phone}]]</td>
+            <td>[[${patients.patient_address}]]</td>
+            <td>[[${patients.patient_age}]]</td>
+            <td>[[${patients.patient_gender}]]</td>
             <td>
-            
-            <!-- A link to edit an order type -->
-              <a th:href="@{'/patient/' + ${patients.patient_id}}" 
-              	title="Edit this patient"
+              <a th:href="@{'/patient/' + ${patients.patient_id}}" title="Edit this patient"
                 class="fa-regular fa-pen-to-square icon-dark"></a>
               &nbsp;
-              
-              <!-- A link to delete an order type -->
-              <a th:href="@{'/patient/delete/' + ${patients.patient_id}}" 
-              th:orderTypeCode="${patient_name}" id="btnDelete"
-                title="Delete this order type" 
+              <a th:href="@{'/patient/delete/' + ${patients.patient_id}}" th:patientname="${patients.patient_name}"
+                id="btnDelete" title="Delete this patient"
                 class="fa-regular fa-trash-can icon-dark btn-delete"></a>
-
-            </td> 
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
 
+    <!-- No record message -->
     <div class="" th:unless="${patient.size() > 0}">
       <span>No record found!</span>
     </div>
   </div>
 
+  <!-- Delete confirmation modal -->
   <div class="modal fade text-center" id="confirmModal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -101,16 +102,18 @@
 
   <script type="text/javascript">
     $(document).ready(function () {
+      // Delete button click event
       $(".btn-delete").on("click", function (e) {
         e.preventDefault();
         link = $(this);
 
-        orderTypeCode = link.attr("patient_name");
+        patientname = link.attr("patientname");
         $("#yesBtn").attr("href", link.attr("href"));
-        $("#confirmText").html("Do you want to delete the  \<strong\>" + patient_name + "\<\/strong\>?");
+        $("#confirmText").html("Do you want to delete the  \<strong\>" + patientname + "\<\/strong\>?");
         $("#confirmModal").modal();
       });
 
+      // Clear button click event
       $("#btnClear").on("click", function (e) {
         e.preventDefault();
         $("#keyword").text("");
