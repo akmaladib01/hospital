@@ -41,4 +41,44 @@ public class AppointmentMenuController {
 
 		return "appointment";
 	}
+	
+	/**
+	* This method will update or add an order type.
+	*
+	* @param orderType
+	* @return
+	*/
+
+	@RequestMapping("/appointment/save")
+	public String updateAppointment (@ModelAttribute Appointment appointment) {
+
+		// Create a new RestTemplate
+		RestTemplate restTemplate = new RestTemplate();
+
+		// Create request body
+		HttpEntity<Appointment> request = new HttpEntity<Appointment>(appointment);
+
+		String appointmentResponse = "";
+
+		if (appointment.getAppointment_id() > 0) {
+			
+			// This block update an new order type and
+
+			// Send request as PUT
+			restTemplate.put(defaultURI, request, Appointment.class);
+		} 
+		
+		else {
+			
+			// This block add a new order type
+
+			// send request as POST
+			appointmentResponse = restTemplate.postForObject(defaultURI, request, String.class);
+		}
+
+		System.out.println(appointmentResponse);
+
+		// Redirect request to display a list of order type
+		return "redirect:/appointment/list";
+	}
 }

@@ -19,7 +19,7 @@
   <div th:replace="fragments/header :: header"></div>
 
   <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
-    <h2 class="text-center">List of Consultation</h2>
+    <h2 class="text-center">List of Room</h2>
 
     <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
       role="alert">
@@ -29,25 +29,18 @@
       </button>
     </div>
 
-    <div th:if="${consultation.size() > 0}">
+    <div th:if="${room.size() > 0}">
       <table class="table table-hover table-responsive-xl">
         <thead class="thead-light">
           <tr>
-            <th scope="col">Consultation ID</th>
-            <th scope="col">Time</th>
-            <th scope="col">Details</th>
-	    <th scope="col">Patient ID</th>
-	    <th scope="col">Doctor ID</th>
-	    
+            <th scope="col">Room ID</th>
+            <th scope="col">Type</th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="consultations : ${consultation}">
-            <th scope="row">[[${consultations.consultation_id}]]</th>
-            <td>[[${consultations.consultation_time}]]</td>
-            <td>[[${consultations.consultation_details}]]</td>
-	    <td>[[${consultations.patient.patient_id}]]</td>
-	    <td>[[${consultations.doctor.doctor_id}]]</td>
+          <tr th:each="rooms : ${room}">
+            <th scope="row">[[${rooms.room_id}]]</th>
+            <td>[[${rooms.room_type}]]</td>
             <td>
             
 
@@ -57,7 +50,7 @@
       </table>
     </div>
 
-    <div class="" th:unless="${consultation.size() > 0}">
+    <div class="" th:unless="${room.size() > 0}">
       <span>No record found!</span>
     </div>
   </div>
