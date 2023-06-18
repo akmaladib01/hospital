@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HOSPITAL MAIN PAGE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #E8F5E9; /* Light green background color */
+        }
+
+        h2 {
+            text-align: center;
+            text-transform: uppercase;
+            text-decoration: underline;
+            margin-top: 20px;
+        }
+
+        .container {
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .section-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .section-buttons button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 10px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>HOSPITAL MAIN PAGE</h2>
+
+    <div class="section">
+        <h3 class="section-title">Patient</h3>
+        <div class="section-buttons">
+            <button onclick="location.href='/patient';">Patient</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3 class="section-title">Department</h3>
+        <div class="section-buttons">
+            <button onclick="location.href='/department';">Department</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3 class="section-title">Doctor</h3>
+        <div class="section-buttons">
+            <button onclick="location.href='/doctor';">Doctor</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3 class="section-title">Appointment</h3>
+        <div class="section-buttons">
+            <button onclick="location.href='/appointment';">Appointment</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3 class="section-title">Consultation</h3>
+        <div class="section-buttons">
+            <button onclick="location.href='/consultation';">Consultation</button>
+        </div>
+    </div>
+    
+    <a href="javascript:history.back()" class="back-button">Back</a>
+</div>
+</body>
+</html>
