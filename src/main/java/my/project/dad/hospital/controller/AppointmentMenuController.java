@@ -2,6 +2,7 @@ package my.project.dad.hospital.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -80,5 +81,60 @@ public class AppointmentMenuController {
 
 		// Redirect request to display a list of order type
 		return "redirect:/appointment/list";
+	}
+	
+	/**
+	 *This method gets an order type
+	 *
+	 *@param orderTypeld
+	 *@param model
+	 *@return
+	 */
+
+	@GetMapping("/appointment/{appointment_id}")
+	public String getAppointment (@PathVariable Integer appointment_id, Model model) {
+
+		String pageTitle = "New appointment";
+		Appointment appointment = new Appointment();
+
+		// This block get an order type to be updated
+		if (appointment_id > 0) {
+
+			// Generate new URI and append orderTypeld to it
+			String uri = defaultURI + "/" + appointment_id;
+
+			// Get an order type from the web service
+			RestTemplate restTemplate = new RestTemplate();
+			appointment = restTemplate.getForObject(uri, Appointment.class);
+
+			// Give a new title to the page
+			pageTitle = "Edit Appointment";
+		}
+
+		// Attach value to pass to front end
+		model.addAttribute("appointment", appointment);
+		model.addAttribute("pageTitle",pageTitle);
+
+		return "new_appointment";
+	}
+	
+	/**
+	*This method deletes an order type
+	*
+	* @param orderTypeld
+	* @return
+	*/
+	@RequestMapping("/appointment/delete/{appointment_id}")
+	public String deleteAppointment(@PathVariable Integer appointment_id) {
+		
+		// Generate new URI, similar to the mapping in OrderTypeRESTController
+		String uri = defaultURI + "/{appointment_id}";
+
+		// Send a DELETE request and attach the value of orderTypeId into URI
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.delete(uri,Map.of("appointment_id", Integer.toString(appointment_id)));
+
+		return "redirect:/appointment/list";
+
 	}
 }
