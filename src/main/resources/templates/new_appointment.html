@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
+  <title>REST Consumer</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+  <div th:replace="fragments/header :: header"></div>
+
+  <div class="container-fluid">
+    <h2 class="text-center">[[${pageTitle}]]</h2>
+
+    <div class="my-3">
+      <form th:action="@{/appointment/save}" method="post" enctype="multipart/form-data" th:object="${appointment}"
+        style="max-width: 550px; margin: 0 auto">
+
+        <input type="hidden" th:field="*{appointment_id}" />
+
+        <div class="p-3">
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="">Date</label>
+            <div class="col-sm-9">
+              <input type="date" th:field="*{appointment_date}" class="form-control" id="appointment_date" />
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="appointment_time">Time</label>
+            <div class="col-sm-9">
+              <input type="time" th:field="*{appointment_time}" class="form-control" id="appointment_time" />
+            </div>
+          </div>
+          
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="appointment_details">Details</label>
+            <div class="col-sm-9">
+              <input type="text" th:field="*{appointment_details}" minlength="2" maxlength="256" class="form-control" id="appointment_details"
+                placeholder="Enter appointment details">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="patient_id">Patient</label>
+            <div class="col-sm-9">
+              <select th:field="*{patient_id}" class="form-control" id="patient_id">
+                <option value="">Select a patient</option>
+                <option th:each="patients : ${patient}" th:value="${patients.patient_id}"
+                  th:text="${patients.patient_name}"></option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="doctor_id">Doctor</label>
+            <div class="col-sm-9">
+              <select th:field="*{doctor_id}" class="form-control" id="doctor_id">
+                <option value="">Select a doctor</option>
+                <option th:each="doctor : ${doctors}" th:value="${doctor.doctor_id}"
+                  th:text="${doctor.doctor_name}"></option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="room_id">Room</label>
+            <div class="col-sm-9">
+              <select th:field="*{room_id}" class="form-control" id="room_id">
+                <option value="">Select a room</option>
+                <option th:each="room : ${rooms}" th:value="${room.room_id}" th:text="${room.room_id}"></option>
+              </select>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div th:replace="fragments/footer :: footer"></div>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#btnCancel").on("click", function () {
+        window.location = "[[@{/appointment/list}]]";
+      });
+    });
+  </script>
+
+</body>
+
+</html>
