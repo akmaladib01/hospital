@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import my.project.dad.hospital.model.Consultation;
+import my.project.dad.hospital.model.Doctor;
+import my.project.dad.hospital.model.Patient;
 
 @Controller
 public class ConsultationMenuController {
@@ -42,78 +44,92 @@ public class ConsultationMenuController {
 		return "consultation";
 	}
 	
-//	/**
-//	* This method will update or add an order type.
-//	*
-//	* @param orderType
-//	* @return
-//	*/
-//
-//	@RequestMapping("/consultation/save")
-//	public String updateConsultation (@ModelAttribute Consultation consultation) {
-//
-//		// Create a new RestTemplate
-//		RestTemplate restTemplate = new RestTemplate();
-//
-//		// Create request body
-//		HttpEntity<Consultation> request = new HttpEntity<Consultation>(consultation);
-//
-//		String ConsultationResponse = "";
-//
-//		if (consultation.getConsultation_id() == "A") {
-//			
-//			// This block update an new order type and
-//
-//			// Send request as PUT
-//			restTemplate.put(defaultURI, request, Consultation.class);
-//		} 
-//		
-//		else {
-//			
-//			// This block add a new order type
-//
-//			// send request as POST
-//			ConsultationResponse = restTemplate.postForObject(defaultURI, request, String.class);
-//		}
-//
-//		System.out.println(ConsultationResponse);
-//
-//		// Redirect request to display a list of order type
-//		return "redirect:/consultation/list";
-//	}
-//	
-//	/**
-//	 *This method gets an order type
-//	 *
-//	 *@param orderTypeld
-//	 *@param model
-//	 *@return
-//	 */
-//
-//	@GetMapping("/consultation/{consultationId}")
-//	public String getConsultation (@PathVariable String consultationId, Model model) {
-//
-//		String pageTitle = "New Consultation";
-//		Consultation consultation = new Consultation();
-//
-//		// This block get an order type to be updated
-//		if (consultationId == "A") {
-//
-//			// Generate new URI and append Consultationld to it
-//			String uri = defaultURI + "/" + consultationId;
-//
-//			// Get an order type from the web service
-//			RestTemplate restTemplate = new RestTemplate();
-//			consultation = restTemplate.getForObject(uri, Consultation.class);
-//
-//			// Give a new title to the page
-//			pageTitle = "Edit Consultation";
-//		}
-//
-//		// Attach value to pass to front end
-//		model.addAttribute("Consultation", consultation);
-//		model.addAttribute("pageTitle",pageTitle);
-//
-//		return "consultationinfo";
-//	}
+	/**
+	* This method will update or add an order type.
+	*
+	* @param orderType
+	* @return
+	*/
+
+	@RequestMapping("/consultation/save")
+	public String updateConsultation (@ModelAttribute Consultation consultation) {
+
+		// Create a new RestTemplate
+		RestTemplate restTemplate = new RestTemplate();
+
+		// Create request body
+		HttpEntity<Consultation> request = new HttpEntity<Consultation>(consultation);
+
+		String consultationResponse = "";
+
+		if (consultation.getConsultation_id() > 0) {
+			
+			// This block update an new order type and
+
+			// Send request as PUT
+			restTemplate.put(defaultURI, request, Consultation.class);
+		} 
+		
+		else {
+			
+			// This block add a new order type
+
+			// send request as POST
+			consultationResponse = restTemplate.postForObject(defaultURI, request, String.class);
+		}
+
+		System.out.println(consultationResponse);
+
+		// Redirect request to display a list of order type
+		return "redirect:/consultation/list";
+	}
+	
+	/**
+	 *This method gets an order type
+	 *
+	 *@param orderTypeld
+	 *@param model
+	 *@return
+	 */
+
+	@GetMapping("/consultation/{consultation_id}")
+	public String getConsultation (@PathVariable Integer consultation_id, Model model) {
+
+		String pageTitle = "New Consultation";
+		Consultation consultation = new Consultation();
+
+		RestTemplate restTemplatePatient = new RestTemplate();
+		ResponseEntity<Patient[]> responsePatient = restTemplatePatient.getForEntity("http://localhost:8080/hospital/api/patient", Patient[].class);
+
+		Patient patientArray[] = responsePatient.getBody();
+		List<Patient> patientList = Arrays.asList(patientArray);
+		
+		RestTemplate restTemplateDoctor = new RestTemplate();
+		ResponseEntity<Doctor[]> responseDoctor = restTemplateDoctor.getForEntity("http://localhost:8080/hospital/api/doctor", Doctor[].class);
+
+		Doctor doctorArray[] = responseDoctor.getBody();
+		List<Doctor> doctorList = Arrays.asList(doctorArray);
+		
+		// This block get an order type to be updated
+		if (consultation_id > 0) {
+
+			// Generate new URI and append Consultationld to it
+			String uri = defaultURI + "/" + consultation_id;
+
+			// Get an order type from the web service
+			RestTemplate restTemplate = new RestTemplate();
+			consultation = restTemplate.getForObject(uri, Consultation.class);
+
+			// Give a new title to the page
+			pageTitle = "Edit Consultation";
+		}
+
+		// Attach value to pass to front end
+		model.addAttribute("patients", patientList);
+		model.addAttribute("doctors", doctorList);
+		model.addAttribute("consultation", consultation);
+		model.addAttribute("pageTitle",pageTitle);
+
+		return "new_consultation";
+	}
 }

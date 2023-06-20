@@ -18,23 +18,16 @@
   <div class="container-fluid">
     <h2 class="text-center">[[${pageTitle}]]</h2>
 
-    <div class="my-3">
-      <form th:action="@{/appointment/save}" method="post" enctype="multipart/form-data" th:object="${appointment}"
+  <div class="my-3">
+      <form th:action="@{/consultation/save}" method="post" enctype="multipart/form-data" th:object="${consultation}"
         style="max-width: 550px; margin: 0 auto">
-        <input type="hidden" th:field="*{appointment_id}" />
-
-        <div class="p-3">
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="">Date</label>
-            <div class="col-sm-9">
-              <input type="date" th:field="*{appointment_date}" class="form-control" id="appointment_date" />
-            </div>
-          </div>
+        <input type="hidden" th:field="*{consultation_id}" />
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="appointment_time">Time</label>
+            <label class="col-sm-3 col-form-label" for="consultation_details">Details</label>
             <div class="col-sm-9">
-              <input type="time" th:field="*{appointment_time}" class="form-control" id="appointment_time" onchange="time(event)" />
+              <input type="text" th:field="*{consultation_details}" minlength="2" maxlength="256" class="form-control" id="consultation_details"
+                placeholder="Enter consultation details">
             </div>
           </div>
 
@@ -62,19 +55,6 @@
             </div>
           </div>
 
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="room_name">Room Name</label>
-            <div class="col-sm-9">
-              <select th:field="*{room.room_name}" class="form-control" id="room_name">
-                <option value="">-- Select Room Name --</option>
-                <option th:each="room : ${rooms}" 
-                th:value="${room.room_name}" 
-                th:text="${room.room_name}"
-                />
-              </select>
-            </div>
-          </div>
-
           <div class="text-center">
             <button type="submit" class="btn btn-primary">Save</button>
           </div>
@@ -92,12 +72,8 @@
 
     $(document).ready(function () {
       $("#btnCancel").on("click", function () {
-        window.location = "[[@{/appointment/list}]]";
+        window.location = "[[@{/consultation/list}]]";
       });
-
-      // Set minimum date to current date
-      var currentDate = new Date().toISOString().split("T")[0];
-      $("#appointment_date").attr("min", currentDate);
     });
   </script>
 

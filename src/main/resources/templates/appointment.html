@@ -36,11 +36,9 @@
             <th scope="col">Appointment ID</th>
             <th scope="col">Date</th>
             <th scope="col">Time</th>
-            <th scope="col">Details</th>
 	    <th scope="col">Patient ID</th>
 	    <th scope="col">Doctor ID</th>
-	    <th scope="col">Room ID</th>
-        <th scope="col">Action</th>
+	    <th scope="col">Room Name</th>
           </tr>
         </thead>
         <tbody>
@@ -48,22 +46,21 @@
             <th scope="row">[[${appointments.appointment_id}]]</th>
             <td>[[${appointments.appointment_date}]]</td>
             <td>[[${appointments.appointment_time}]]</td>
-	    <td>[[${appointments.appointment_details}]]</td>
-	    <td>[[${appointments.patient.patient_id}]]</td>
-	    <td>[[${appointments.doctor.doctor_id}]]</td>
-	    <td>[[${appointments.room.room_id}]]</td>
+		    <td>[[${appointments.patient.patient_id}]]</td>
+		    <td>[[${appointments.doctor.doctor_id}]]</td>
+		    <td>[[${appointments.room.room_name}]]</td>
             <td>
-            <!-- A link to edit an order type -->
-              <a th:href="@{'/appointment/' + ${appointments.appointment_id}}" 
-              	title="Edit this Appointment"
-                class="fa-regular fa-pen-to-square icon-dark"></a>
-              &nbsp;
+<!--             A link to edit an order type -->
+<!--               <a th:href="@{'/appointment/' + ${appointments.appointment_id}}"  -->
+<!--               	title="Edit this Appointment" -->
+<!--                 class="fa-regular fa-pen-to-square icon-dark"></a> -->
+<!--               &nbsp; -->
               
-              <!-- A link to delete an order type -->
-              <a th:href="@{'/appointment/delete/' + ${appointments.appointment_id}}" 
-              th:appointment_id="${appointments.appointment_id}" id="btnDelete"
-                title="Delete this appointment" 
-                class="fa-regular fa-trash-can icon-dark btn-delete"></a>
+<!--               A link to delete an order type -->
+<!--               <a th:href="@{'/appointment/delete/' + ${appointments.appointment_id}}"  -->
+<!--               th:appointment_id="${appointments.appointment_id}" id="btnDelete" -->
+<!--                 title="Delete this appointment"  -->
+<!--                 class="fa-regular fa-trash-can icon-dark btn-delete"></a> -->
 
             </td> 
           </tr>

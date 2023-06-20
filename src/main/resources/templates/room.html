@@ -33,13 +33,13 @@
       <table class="table table-hover table-responsive-xl">
         <thead class="thead-light">
           <tr>
-            <th scope="col">Room ID</th>
+            <th scope="col">Room Name</th>
             <th scope="col">Type</th>
           </tr>
         </thead>
         <tbody>
           <tr th:each="rooms : ${room}">
-            <th scope="row">[[${rooms.room_id}]]</th>
+            <th scope="row">[[${rooms.room_name}]]</th>
             <td>[[${rooms.room_type}]]</td>
             <td>
             

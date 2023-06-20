@@ -32,8 +32,8 @@ public class RoomRESTController {
 	
 	// GET Room by ID
 	@GetMapping ("{Room_id}")
-	public Room getRoom(@PathVariable long room_id) {
-		Room Room = roomRepository.findById(room_id).get();
+	public Room getRoom(@PathVariable String room_name) {
+		Room Room = roomRepository.findById(room_name).get();
 		return Room;
 	}
 	
@@ -51,8 +51,8 @@ public class RoomRESTController {
 	
 	// DELETE Room by ID
 	@DeleteMapping("{Room_id}")
-	public ResponseEntity<HttpStatus> deleteRoom(@PathVariable long room_id) {
-		roomRepository.deleteById(room_id);
+	public ResponseEntity<HttpStatus> deleteRoom(@PathVariable String room_name) {
+		roomRepository.deleteById(room_name);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

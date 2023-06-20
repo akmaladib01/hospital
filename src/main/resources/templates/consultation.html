@@ -34,7 +34,6 @@
         <thead class="thead-light">
           <tr>
             <th scope="col">Consultation ID</th>
-            <th scope="col">Time</th>
             <th scope="col">Details</th>
 	    <th scope="col">Patient ID</th>
 	    <th scope="col">Doctor ID</th>
@@ -44,7 +43,6 @@
         <tbody>
           <tr th:each="consultations : ${consultation}">
             <th scope="row">[[${consultations.consultation_id}]]</th>
-            <td>[[${consultations.consultation_time}]]</td>
             <td>[[${consultations.consultation_details}]]</td>
 	    <td>[[${consultations.patient.patient_id}]]</td>
 	    <td>[[${consultations.doctor.doctor_id}]]</td>

@@ -70,3 +70,80 @@ public class Patient {
 	
 	
 }
+//
+//	@GetMapping("/appointments/{patientIC}")
+//	public String getAppointment(@PathVariable Integer patientIC,  Model model, 
+//			@RequestParam(name = "patientIC1", required =false) String patientIC1) {
+//		
+//		String pageTitle="Appointment";
+//		
+//		PatientAppointment patientAppointment = new PatientAppointment();
+//		
+//		PatientDetail currentPatientDetail = new PatientDetail();
+//			
+//		if(!Strings.isBlank(patientIC1)) {
+//			
+//			RestTemplate restPatient = new RestTemplate();
+//			currentPatientDetail = restPatient.getForObject("http://localhost:8080/appointmentapp/api/patientdetails/patientIC/" + patientIC1, PatientDetail.class);	
+//			patientAppointment.setPatientID(currentPatientDetail);
+//		}
+//		
+//		System.out.println(currentPatientDetail.getPatientID());
+//	
+//		RestTemplate restTemplateRoomSlot = new RestTemplate();
+//		ResponseEntity<RoomSlot[]> responseRoomSlot = restTemplateRoomSlot.getForEntity("http://localhost:8080/appointmentapp/api/roomslots", RoomSlot[].class);
+//		
+//		RoomSlot roomSlotArray[] = responseRoomSlot.getBody();
+//		
+//		List<RoomSlot>slotList = Arrays.asList(roomSlotArray);
+//		
+//		for( RoomSlot roomslot : slotList) {
+//			
+//			System.out.println("test data" + roomslot.getRoomID().getDoctorID());
+//		}
+//		
+//	    
+//		model.addAttribute("patientAppointment", patientAppointment);
+//		model.addAttribute("Appointment",pageTitle);
+//		model.addAttribute("patientID", currentPatientDetail);
+//		model.addAttribute("slotList", slotList);
+//		
+//		return "appointment";
+//	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+  <title>REST Consumer</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+  <div th:replace="fragments/header :: header"></div>
+
+  <div class="container-fluid">
+    <h2 class="text-center">[[${pageTitle}]]</h2>
+
+    <div class="my-3">
+      <form th:action="@{/prescription/save}" method="post" enctype="multipart/form-data" th:object="${prescription}"
+        style="max-width: 550px; margin: 0 auto">
+        <input type="hidden" th:field="*{prescription_id}" />
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="prescription_details">Details</label>
+            <div class="col-sm-9">
+              <input type="text" th:field="*{prescription_details}" minlength="2" maxlength="256" class="form-control" id="prescription_details"
+                placeholder="Enter prescription details">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="consultation_id">Consultation ID</label>
+            <div class="col-sm-9">
+              <select th:field="*{consultation.consultation_id}" class="form-control" id="consultation_id">
+                <option th:each="consultation : ${consultations}" 
+                th:value="${consultation.consultation_id}" 
+                th:text="${consultation.consultation_id}"
+                />
+              </select>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div th:replace="fragments/footer :: footer"></div>
+
+  <script type="text/javascript">
+    function time(e) {
+      console.log(e.target.value);
+    }
+
+    $(document).ready(function () {
+      $("#btnCancel").on("click", function () {
+        window.location = "[[@{/prescription/list}]]";
+      });
+    });
+  </script>
+
+</body>
+
+</html>

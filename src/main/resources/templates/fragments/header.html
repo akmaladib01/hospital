@@ -1,7 +1,7 @@
 <header th:fragment="header">
   <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <a class="navbar-brand" th:href="@{/appointment/list}">
-      Master Information
+      Hospital Main Page
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
       <span class="navbar-toggler-icon"></span>
@@ -13,6 +13,12 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" th:href="@{/appointment/0}">Add New Appointment</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/consultation/0}">Add New Consultation</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/prescription/0}">Add New Prescription</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true"

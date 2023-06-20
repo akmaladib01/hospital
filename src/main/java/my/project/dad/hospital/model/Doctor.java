@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,6 +26,10 @@ public class Doctor {
 	
 	@Column (name = "doctor_skill")
 	private String doctor_skill;
+	
+	@OneToOne
+	@JoinColumn(name = "room_name")
+	private Room room;
 	
 	public int getDoctor_id() {
 		return doctor_id;
@@ -48,6 +54,12 @@ public class Doctor {
 	}
 	public void setDoctor_skill(String doctor_skill) {
 		this.doctor_skill = doctor_skill;
+	}
+	public Room getRoom() {
+		return room;
+	}
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 	
 	

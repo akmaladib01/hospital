@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import my.project.dad.hospital.model.Room;
 
 @Repository
-public interface RoomRepository extends JpaRepository<Room, Long> {
+public interface RoomRepository extends JpaRepository<Room, String> {
 
 }

@@ -20,9 +20,6 @@ public class Consultation {
 	@Column (name = "consultation_id")
 	private int consultation_id;
 	
-	@Column (name = "consultation_time")
-	private Time consultation_time;
-	
 	@Column (name = "consultation_details")
 	private String consultation_details;
 	
@@ -40,14 +37,6 @@ public class Consultation {
 
 	public void setConsultation_id(int consultation_id) {
 		this.consultation_id = consultation_id;
-	}
-
-	public Time getConsultation_time() {
-		return consultation_time;
-	}
-
-	public void setConsultation_time(Time consultation_time) {
-		this.consultation_time = consultation_time;
 	}
 
 	public String getConsultation_details() {

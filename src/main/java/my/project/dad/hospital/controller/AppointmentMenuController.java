@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import my.project.dad.hospital.model.Appointment;
+import my.project.dad.hospital.model.Patient;
+import my.project.dad.hospital.model.Doctor;
+import my.project.dad.hospital.model.Room;
 
 @Controller
 public class AppointmentMenuController {
@@ -55,7 +58,7 @@ public class AppointmentMenuController {
 
 		// Create a new RestTemplate
 		RestTemplate restTemplate = new RestTemplate();
-
+		//System.out.print(appointment.getAppointment_time());
 		// Create request body
 		HttpEntity<Appointment> request = new HttpEntity<Appointment>(appointment);
 
@@ -93,16 +96,35 @@ public class AppointmentMenuController {
 
 	@GetMapping("/appointment/{appointment_id}")
 	public String getAppointment (@PathVariable Integer appointment_id, Model model) {
-
+		
 		String pageTitle = "New appointment";
 		Appointment appointment = new Appointment();
+		
+		RestTemplate restTemplatePatient = new RestTemplate();
+		ResponseEntity<Patient[]> responsePatient = restTemplatePatient.getForEntity("http://localhost:8080/hospital/api/patient", Patient[].class);
 
+		Patient patientArray[] = responsePatient.getBody();
+		List<Patient> patientList = Arrays.asList(patientArray);
+		
+		RestTemplate restTemplateDoctor = new RestTemplate();
+		ResponseEntity<Doctor[]> responseDoctor = restTemplateDoctor.getForEntity("http://localhost:8080/hospital/api/doctor", Doctor[].class);
+
+		Doctor doctorArray[] = responseDoctor.getBody();
+		List<Doctor> doctorList = Arrays.asList(doctorArray);
+		
+		RestTemplate restTemplateRoom = new RestTemplate();
+		ResponseEntity<Room[]> responseRoom = restTemplateRoom.getForEntity("http://localhost:8080/hospital/api/room", Room[].class);
+
+		Room roomArray[] = responseRoom.getBody();
+		List<Room> roomList = Arrays.asList(roomArray);
+
+		
 		// This block get an order type to be updated
 		if (appointment_id > 0) {
 
 			// Generate new URI and append orderTypeld to it
 			String uri = defaultURI + "/" + appointment_id;
-
+			
 			// Get an order type from the web service
 			RestTemplate restTemplate = new RestTemplate();
 			appointment = restTemplate.getForObject(uri, Appointment.class);
@@ -112,29 +134,32 @@ public class AppointmentMenuController {
 		}
 
 		// Attach value to pass to front end
+		model.addAttribute("patients", patientList);
+		model.addAttribute("doctors", doctorList);
+		model.addAttribute("rooms", roomList);
 		model.addAttribute("appointment", appointment);
 		model.addAttribute("pageTitle",pageTitle);
 
 		return "new_appointment";
 	}
 	
-	/**
-	*This method deletes an order type
-	*
-	* @param orderTypeld
-	* @return
-	*/
-	@RequestMapping("/appointment/delete/{appointment_id}")
-	public String deleteAppointment(@PathVariable Integer appointment_id) {
-		
-		// Generate new URI, similar to the mapping in OrderTypeRESTController
-		String uri = defaultURI + "/{appointment_id}";
-
-		// Send a DELETE request and attach the value of orderTypeId into URI
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.delete(uri,Map.of("appointment_id", Integer.toString(appointment_id)));
-
-		return "redirect:/appointment/list";
-
-	}
+//	/**
+//	*This method deletes an order type
+//	*
+//	* @param orderTypeld
+//	* @return
+//	*/
+//	@RequestMapping("/appointment/delete/{appointment_id}")
+//	public String deleteAppointment(@PathVariable Integer appointment_id) {
+//		
+//		// Generate new URI, similar to the mapping in OrderTypeRESTController
+//		String uri = defaultURI + "/{appointment_id}";
+//
+//		// Send a DELETE request and attach the value of orderTypeId into URI
+//		RestTemplate restTemplate = new RestTemplate();
+//		restTemplate.delete(uri,Map.of("appointment_id", Integer.toString(appointment_id)));
+//
+//		return "redirect:/appointment/list";
+//
+//	}
 }
