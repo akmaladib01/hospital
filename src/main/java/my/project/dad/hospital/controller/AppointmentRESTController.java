@@ -31,7 +31,7 @@ public class AppointmentRESTController {
 	}
 	
 	// GET appointment by ID
-	@GetMapping ("{appointment_id}")
+	@GetMapping("{appointment_id}")
 	public Appointment getAppointment(@PathVariable long appointment_id) {
 		Appointment appointment = appointmentRepository.findById(appointment_id).get();
 		return appointment;

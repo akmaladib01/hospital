@@ -6,12 +6,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
   <title>REST Consumer</title>
 
+  <!-- Bootstrap CSS -->
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  <!-- Font Awesome CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
     integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- jQuery -->
   <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <!-- Bootstrap JS -->
   <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 
@@ -21,6 +26,7 @@
   <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
     <h2 class="text-center">List of Patients</h2>
 
+    <!-- Display success message if exists -->
     <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
       role="alert">
       [[${message}]]
@@ -28,8 +34,6 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-
-    
 
     <div th:if="${patient.size() > 0}">
       <table class="table table-hover table-responsive-xl">
@@ -45,6 +49,7 @@
           </tr>
         </thead>
         <tbody>
+          <!-- Iterate over patients and display their details -->
           <tr th:each="patients : ${patient}">
             <th scope="row">[[${patients.patient_id}]]</th>
             <td>[[${patients.patient_name}]]</td>
@@ -53,19 +58,16 @@
             <td>[[${patients.patient_age}]]</td>
             <td>[[${patients.patient_gender}]]</td>
             <td>
-              <!-- A link to edit an order type -->
-              <a th:href="@{'/patient/' + ${patients.patient_id}}" 
-              	title="Edit this patient"
+              <!-- Link to edit patient information -->
+              <a th:href="@{'/patient/' + ${patients.patient_id}}" title="Edit this patient"
                 class="fa-regular fa-pen-to-square icon-dark"></a>
               &nbsp;
-              
-              <!-- A link to delete an order type -->
-              <a th:href="@{'/patient/delete/' + ${patients.patient_id}}" 
-              th:patient_name="${patients.patient_name}" id="btnDelete"
-                title="Delete this patient" 
-                class="fa-regular fa-trash-can icon-dark btn-delete"></a>
 
-            </td> 
+              <!-- Link to delete patient information -->
+              <a th:href="@{'/patient/delete/' + ${patients.patient_id}}" th:patient_name="${patients.patient_name}"
+                id="btnDelete" title="Delete this patient" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
+
+            </td>
           </tr>
         </tbody>
       </table>
@@ -76,6 +78,7 @@
     </div>
   </div>
 
+  <!-- Delete confirmation modal -->
   <div class="modal fade text-center" id="confirmModal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -102,6 +105,7 @@
 
   <script type="text/javascript">
     $(document).ready(function () {
+      // Delete button click event
       $(".btn-delete").on("click", function (e) {
         e.preventDefault();
         link = $(this);
@@ -112,6 +116,7 @@
         $("#confirmModal").modal();
       });
 
+      // Clear button click event
       $("#btnClear").on("click", function (e) {
         e.preventDefault();
         $("#keyword").text("");

@@ -13,7 +13,7 @@ public class Room {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column (name = "room_name")
+	@Column(name = "room_name")
 	private String room_name;
 	
 	private String room_type;
@@ -33,6 +33,4 @@ public class Room {
 	public void setRoom_type(String room_type) {
 		this.room_type = room_type;
 	}
-	
-	
 }

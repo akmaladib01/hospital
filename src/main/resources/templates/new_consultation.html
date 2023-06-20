@@ -6,9 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
   <title>REST Consumer</title>
 
+  <!-- Bootstrap CSS -->
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  <!-- jQuery -->
   <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <!-- Bootstrap JS -->
   <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 
@@ -18,46 +22,43 @@
   <div class="container-fluid">
     <h2 class="text-center">[[${pageTitle}]]</h2>
 
-  <div class="my-3">
+    <div class="my-3">
       <form th:action="@{/consultation/save}" method="post" enctype="multipart/form-data" th:object="${consultation}"
         style="max-width: 550px; margin: 0 auto">
         <input type="hidden" th:field="*{consultation_id}" />
 
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="consultation_details">Details</label>
-            <div class="col-sm-9">
-              <input type="text" th:field="*{consultation_details}" minlength="2" maxlength="256" class="form-control" id="consultation_details"
-                placeholder="Enter consultation details">
-            </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="consultation_details">Details</label>
+          <div class="col-sm-9">
+            <input type="text" th:field="*{consultation_details}" minlength="2" maxlength="256" class="form-control" id="consultation_details"
+              placeholder="Enter consultation details">
           </div>
+        </div>
 
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="patient_id">Patient ID</label>
-            <div class="col-sm-9">
-              <select th:field="*{patient.patient_id}" class="form-control" id="patient_id">
-                <option th:each="patient : ${patients}" 
-                th:value="${patient.patient_id}" 
-                th:text="${patient.patient_name}"
-                />
-              </select>
-            </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="patient_id">Patient ID</label>
+          <div class="col-sm-9">
+            <select th:field="*{patient.patient_id}" class="form-control" id="patient_id">
+              <option th:each="patient : ${patients}" 
+              th:value="${patient.patient_id}" 
+              th:text="${patient.patient_name}"></option>
+            </select>
           </div>
+        </div>
 
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label" for="doctor_id">Doctor ID</label>
-            <div class="col-sm-9">
-              <select th:field="*{doctor.doctor_id}" class="form-control" id="doctor_id">
-                <option th:each="doctor : ${doctors}" 
-                th:value="${doctor.doctor_id}" 
-                th:text="${doctor.doctor_name}"
-                />
-              </select>
-            </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label" for="doctor_id">Doctor ID</label>
+          <div class="col-sm-9">
+            <select th:field="*{doctor.doctor_id}" class="form-control" id="doctor_id">
+              <option th:each="doctor : ${doctors}" 
+              th:value="${doctor.doctor_id}" 
+              th:text="${doctor.doctor_name}"></option>
+            </select>
           </div>
+        </div>
 
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary">Save</button>
-          </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Save</button>
         </div>
       </form>
     </div>
@@ -66,11 +67,13 @@
   <div th:replace="fragments/footer :: footer"></div>
 
   <script type="text/javascript">
+    // Function to handle time change event
     function time(e) {
       console.log(e.target.value);
     }
 
     $(document).ready(function () {
+      // Cancel button click event
       $("#btnCancel").on("click", function () {
         window.location = "[[@{/consultation/list}]]";
       });

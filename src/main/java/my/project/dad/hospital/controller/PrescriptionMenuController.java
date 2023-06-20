@@ -56,32 +56,30 @@ public class PrescriptionMenuController {
 
 		if (prescription.getPrescription_id() > 0) {
 			
-			// This block update an new order type and
+			// This block updates an existing prescription
 
 			// Send request as PUT
 			restTemplate.put(defaultURI, request, Prescription.class);
-		} 
-		
-		else {
+		} else {
 			
-			// This block add a new order type
+			// This block adds a new prescription
 
-			// send request as POST
+			// Send request as POST
 			prescriptionResponse = restTemplate.postForObject(defaultURI, request, String.class);
 		}
 
 		System.out.println(prescriptionResponse);
 
-		// Redirect request to display a list of order type
+		// Redirect request to display a list of prescriptions
 		return "redirect:/prescription/list";
 	}
 	
 	/**
-	 *This method gets an order type
+	 * This method gets a prescription
 	 *
-	 *@param orderTypeld
-	 *@param model
-	 *@return
+	 * @param prescription_id
+	 * @param model
+	 * @return
 	 */
 
 	@GetMapping("/prescription/{prescription_id}")
@@ -90,19 +88,20 @@ public class PrescriptionMenuController {
 		String pageTitle = "New prescription";
 		Prescription prescription = new Prescription();
 		
+		// Retrieve a list of consultations from the web service
 		RestTemplate restTemplateConsultation = new RestTemplate();
 		ResponseEntity<Consultation[]> responseConsultation = restTemplateConsultation.getForEntity("http://localhost:8080/hospital/api/consultation", Consultation[].class);
 
 		Consultation consultationArray[] = responseConsultation.getBody();
 		List<Consultation> consultationList = Arrays.asList(consultationArray);
 		
-		// This block get an order type to be updated
+		// This block gets a prescription to be updated
 		if (prescription_id > 0) {
 
-			// Generate new URI and append orderTypeld to it
+			// Generate new URI and append prescription_id to it
 			String uri = defaultURI + "/" + prescription_id;
 			
-			// Get an order type from the web service
+			// Get a prescription from the web service
 			RestTemplate restTemplate = new RestTemplate();
 			prescription = restTemplate.getForObject(uri, Prescription.class);
 
@@ -110,10 +109,10 @@ public class PrescriptionMenuController {
 			//pageTitle = "Edit Appointment";
 		}
 
-		// Attach value to pass to front end
+		// Attach values to pass to the front end
 		model.addAttribute("consultations", consultationList);
 		model.addAttribute("prescription", prescription);
-		model.addAttribute("pageTitle",pageTitle);
+		model.addAttribute("pageTitle", pageTitle);
 
 		return "new_prescription";
 	}

@@ -15,10 +15,10 @@ public class Prescription {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column (name = "prescription_id")
+	@Column(name = "prescription_id")
 	private int prescription_id;
 	
-	@Column (name = "prescription_details")
+	@Column(name = "prescription_details")
 	private String prescription_details;
 	
 	@OneToOne
@@ -28,18 +28,23 @@ public class Prescription {
 	public int getPrescription_id() {
 		return prescription_id;
 	}
+	
 	public void setPrescription_id(int prescription_id) {
 		this.prescription_id = prescription_id;
 	}
+	
 	public String getPrescription_details() {
 		return prescription_details;
 	}
+	
 	public void setPrescription_details(String prescription_details) {
 		this.prescription_details = prescription_details;
 	}
+	
 	public Consultation getConsultation() {
 		return consultation;
 	}
+	
 	public void setConsultation(Consultation consultation) {
 		this.consultation = consultation;
 	}

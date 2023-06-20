@@ -2,7 +2,6 @@ package my.project.dad.hospital.controller;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -49,8 +48,8 @@ public class AppointmentMenuController {
 	/**
 	* This method will update or add an order type.
 	*
-	* @param orderType
-	* @return
+	* @param orderType The appointment object to be updated or added
+	* @return A string representing the view to redirect to
 	*/
 
 	@RequestMapping("/appointment/save")
@@ -58,7 +57,7 @@ public class AppointmentMenuController {
 
 		// Create a new RestTemplate
 		RestTemplate restTemplate = new RestTemplate();
-		//System.out.print(appointment.getAppointment_time());
+
 		// Create request body
 		HttpEntity<Appointment> request = new HttpEntity<Appointment>(appointment);
 
@@ -66,7 +65,7 @@ public class AppointmentMenuController {
 
 		if (appointment.getAppointment_id() > 0) {
 			
-			// This block update an new order type and
+			// This block updates an existing appointment
 
 			// Send request as PUT
 			restTemplate.put(defaultURI, request, Appointment.class);
@@ -74,24 +73,24 @@ public class AppointmentMenuController {
 		
 		else {
 			
-			// This block add a new order type
+			// This block adds a new appointment
 
-			// send request as POST
+			// Send request as POST
 			appointmentResponse = restTemplate.postForObject(defaultURI, request, String.class);
 		}
 
 		System.out.println(appointmentResponse);
 
-		// Redirect request to display a list of order type
+		// Redirect request to display a list of appointment types
 		return "redirect:/appointment/list";
 	}
 	
 	/**
-	 *This method gets an order type
+	 * This method retrieves an appointment.
 	 *
-	 *@param orderTypeld
-	 *@param model
-	 *@return
+	 * @param appointment_id The ID of the appointment to retrieve
+	 * @param model The model to pass data to the view
+	 * @return A string representing the view to render
 	 */
 
 	@GetMapping("/appointment/{appointment_id}")
@@ -100,32 +99,34 @@ public class AppointmentMenuController {
 		String pageTitle = "New appointment";
 		Appointment appointment = new Appointment();
 		
+		// Retrieve the list of patients from the web service
 		RestTemplate restTemplatePatient = new RestTemplate();
 		ResponseEntity<Patient[]> responsePatient = restTemplatePatient.getForEntity("http://localhost:8080/hospital/api/patient", Patient[].class);
 
 		Patient patientArray[] = responsePatient.getBody();
 		List<Patient> patientList = Arrays.asList(patientArray);
 		
+		// Retrieve the list of doctors from the web service
 		RestTemplate restTemplateDoctor = new RestTemplate();
 		ResponseEntity<Doctor[]> responseDoctor = restTemplateDoctor.getForEntity("http://localhost:8080/hospital/api/doctor", Doctor[].class);
 
 		Doctor doctorArray[] = responseDoctor.getBody();
 		List<Doctor> doctorList = Arrays.asList(doctorArray);
 		
+		// Retrieve the list of rooms from the web service
 		RestTemplate restTemplateRoom = new RestTemplate();
 		ResponseEntity<Room[]> responseRoom = restTemplateRoom.getForEntity("http://localhost:8080/hospital/api/room", Room[].class);
 
 		Room roomArray[] = responseRoom.getBody();
 		List<Room> roomList = Arrays.asList(roomArray);
-
 		
-		// This block get an order type to be updated
+		// This block retrieves an appointment to be updated
 		if (appointment_id > 0) {
 
-			// Generate new URI and append orderTypeld to it
+			// Generate new URI and append appointment_id to it
 			String uri = defaultURI + "/" + appointment_id;
 			
-			// Get an order type from the web service
+			// Get an appointment from the web service
 			RestTemplate restTemplate = new RestTemplate();
 			appointment = restTemplate.getForObject(uri, Appointment.class);
 
@@ -133,33 +134,13 @@ public class AppointmentMenuController {
 			pageTitle = "Edit Appointment";
 		}
 
-		// Attach value to pass to front end
+		// Attach values to be passed to the front end
 		model.addAttribute("patients", patientList);
 		model.addAttribute("doctors", doctorList);
 		model.addAttribute("rooms", roomList);
 		model.addAttribute("appointment", appointment);
-		model.addAttribute("pageTitle",pageTitle);
+		model.addAttribute("pageTitle", pageTitle);
 
 		return "new_appointment";
 	}
-	
-//	/**
-//	*This method deletes an order type
-//	*
-//	* @param orderTypeld
-//	* @return
-//	*/
-//	@RequestMapping("/appointment/delete/{appointment_id}")
-//	public String deleteAppointment(@PathVariable Integer appointment_id) {
-//		
-//		// Generate new URI, similar to the mapping in OrderTypeRESTController
-//		String uri = defaultURI + "/{appointment_id}";
-//
-//		// Send a DELETE request and attach the value of orderTypeId into URI
-//		RestTemplate restTemplate = new RestTemplate();
-//		restTemplate.delete(uri,Map.of("appointment_id", Integer.toString(appointment_id)));
-//
-//		return "redirect:/appointment/list";
-//
-//	}
 }

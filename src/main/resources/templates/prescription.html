@@ -6,12 +6,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
   <title>REST Consumer</title>
 
+  <!-- Bootstrap CSS -->
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  <!-- Font Awesome CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
     integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- jQuery -->
   <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <!-- Bootstrap JS -->
   <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 
@@ -21,6 +26,7 @@
   <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
     <h2 class="text-center">List of Prescription</h2>
 
+    <!-- Display success message if exists -->
     <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
       role="alert">
       [[${message}]]
@@ -39,12 +45,13 @@
           </tr>
         </thead>
         <tbody>
+          <!-- Iterate over prescriptions and display their details -->
           <tr th:each="prescriptions : ${prescription}">
             <th scope="row">[[${prescriptions.prescription_id}]]</th>
             <td>[[${prescriptions.prescription_details}]]</td>
 	    <td>[[${prescriptions.consultation.consultation_id}]]</td>
             <td>
-            
+              <!-- Add any actions/buttons here if needed -->
 
             </td> 
           </tr>
@@ -57,6 +64,7 @@
     </div>
   </div>
 
+  <!-- Delete confirmation modal -->
   <div class="modal fade text-center" id="confirmModal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -83,6 +91,7 @@
 
   <script type="text/javascript">
     $(document).ready(function () {
+      // Delete button click event
       $(".btn-delete").on("click", function (e) {
         e.preventDefault();
         link = $(this);
@@ -93,6 +102,7 @@
         $("#confirmModal").modal();
       });
 
+      // Clear button click event
       $("#btnClear").on("click", function (e) {
         e.preventDefault();
         $("#keyword").text("");

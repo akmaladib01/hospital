@@ -26,32 +26,32 @@ public class PatientRESTController {
 	
 	@GetMapping
 	public List<Patient> getPatients() {
-		
+		// Retrieve all patients from the patient repository
 		return patientRepository.findAll();
 	}
 	
 	@GetMapping ("{patient_id}")
 	public Patient getPatient(@PathVariable Integer patient_id) {
-		
+		// Retrieve a specific patient by patient_id from the patient repository
 		Patient patient = patientRepository.findById(patient_id).get();
 		return patient;
 	}
 	
 	@PostMapping()
 	public Patient insertPatient(@RequestBody Patient patient) {
-		
+		// Insert a new patient into the patient repository
 		return patientRepository.save(patient);
 	}
 	
 	@PutMapping()
 	public Patient updatePatient(@RequestBody Patient patient) {
-		
+		// Update an existing patient in the patient repository
 		return patientRepository.save(patient);
 	}
 	
 	@DeleteMapping("{patient_id}")
 	public ResponseEntity<HttpStatus> deletePatient(@PathVariable Integer patient_id) {
-		
+		// Delete a patient from the patient repository by patient_id
 		patientRepository.deleteById(patient_id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

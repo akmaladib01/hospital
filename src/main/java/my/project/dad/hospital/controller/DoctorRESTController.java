@@ -26,32 +26,32 @@ public class DoctorRESTController {
 	
 	@GetMapping
 	public List<Doctor> getDoctors() {
-		
+		// Retrieve all doctors from the repository
 		return doctorRepository.findAll();
 	}
 	
 	@GetMapping ("{doctor_id}")
 	public Doctor getDoctor(@PathVariable int doctor_id) {
-		
+		// Retrieve a specific doctor by ID from the repository
 		Doctor doctor = doctorRepository.findById(doctor_id).get();
 		return doctor;
 	}
 	
 	@PostMapping()
 	public Doctor insertDoctor(@RequestBody Doctor doctor) {
-		
+		// Insert a new doctor into the repository
 		return doctorRepository.save(doctor);
 	}
 	
 	@PutMapping()
 	public Doctor updateDoctor(@RequestBody Doctor doctor) {
-		
+		// Update an existing doctor in the repository
 		return doctorRepository.save(doctor);
 	}
 	
 	@DeleteMapping("{doctor_id}")
 	public ResponseEntity<HttpStatus> deleteDoctor(@PathVariable int doctor_id) {
-		
+		// Delete a doctor from the repository by ID
 		doctorRepository.deleteById(doctor_id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

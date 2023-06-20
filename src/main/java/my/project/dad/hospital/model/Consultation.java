@@ -1,7 +1,5 @@
 package my.project.dad.hospital.model;
 
-import java.sql.Time;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,10 +15,10 @@ public class Consultation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column (name = "consultation_id")
+	@Column(name = "consultation_id")
 	private int consultation_id;
 	
-	@Column (name = "consultation_details")
+	@Column(name = "consultation_details")
 	private String consultation_details;
 	
 	@ManyToOne

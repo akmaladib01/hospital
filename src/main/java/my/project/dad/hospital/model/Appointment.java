@@ -1,8 +1,6 @@
 package my.project.dad.hospital.model;
 
-import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,16 +23,16 @@ public class Appointment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column (name = "appointment_id")
+	@Column(name = "appointment_id")
 	private int appointment_id;
 	
-	@Column (name = "appointment_date")
+	@Column(name = "appointment_date")
 	@Temporal(TemporalType.DATE)
 	private Date appointment_date;
 	
 	@Temporal(TemporalType.TIME)
-	@DateTimeFormat(pattern ="HH:mm")
-	@Column (name = "appointment_time")
+	@DateTimeFormat(pattern = "HH:mm")
+	@Column(name = "appointment_time")
 	private LocalTime appointment_time;
 	
 	@ManyToOne
@@ -74,7 +72,7 @@ public class Appointment {
 	}
 	
 	public Patient getPatient() {
-		return patient; 
+		return patient;
 	}
 	
 	public void setPatient(Patient patient) {

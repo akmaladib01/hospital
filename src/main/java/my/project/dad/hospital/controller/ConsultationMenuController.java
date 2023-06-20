@@ -25,29 +25,29 @@ public class ConsultationMenuController {
 	@GetMapping("/consultation/list")
 	public String getConsultation(Model model) {
 		
-		// The URI for GET order types
+		// The URI for GET consultation
 		String uri = "http://localhost:8080/hospital/api/consultation";
 
-		// Get a list order types from the web service
+		// Get a list of consultations from the web service
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<Consultation[]> response = restTemplate.getForEntity(uri, Consultation[].class);
 
-		// Parse JSON data to array of object
-		Consultation consultation[] = response.getBody();
+		// Parse JSON data to an array of objects
+		Consultation[] consultation = response.getBody();
 
-		// Parse an array to a list object
+		// Convert the array to a list
 		List<Consultation> consultationList = Arrays.asList(consultation);
 
-		// Attach list to model as attribute
+		// Attach the list to the model as an attribute
 		model.addAttribute("consultation",consultationList);
 
 		return "consultation";
 	}
 	
 	/**
-	* This method will update or add an order type.
+	* This method will update or add a consultation.
 	*
-	* @param orderType
+	* @param consultation
 	* @return
 	*/
 
@@ -64,7 +64,7 @@ public class ConsultationMenuController {
 
 		if (consultation.getConsultation_id() > 0) {
 			
-			// This block update an new order type and
+			// This block updates an existing consultation
 
 			// Send request as PUT
 			restTemplate.put(defaultURI, request, Consultation.class);
@@ -72,24 +72,24 @@ public class ConsultationMenuController {
 		
 		else {
 			
-			// This block add a new order type
+			// This block adds a new consultation
 
-			// send request as POST
+			// Send request as POST
 			consultationResponse = restTemplate.postForObject(defaultURI, request, String.class);
 		}
 
 		System.out.println(consultationResponse);
 
-		// Redirect request to display a list of order type
+		// Redirect request to display a list of consultations
 		return "redirect:/consultation/list";
 	}
 	
 	/**
-	 *This method gets an order type
+	 * This method gets a consultation.
 	 *
-	 *@param orderTypeld
-	 *@param model
-	 *@return
+	 * @param consultation_id
+	 * @param model
+	 * @return
 	 */
 
 	@GetMapping("/consultation/{consultation_id}")
@@ -98,25 +98,27 @@ public class ConsultationMenuController {
 		String pageTitle = "New Consultation";
 		Consultation consultation = new Consultation();
 
+		// Get a list of patients from the web service
 		RestTemplate restTemplatePatient = new RestTemplate();
 		ResponseEntity<Patient[]> responsePatient = restTemplatePatient.getForEntity("http://localhost:8080/hospital/api/patient", Patient[].class);
 
 		Patient patientArray[] = responsePatient.getBody();
 		List<Patient> patientList = Arrays.asList(patientArray);
 		
+		// Get a list of doctors from the web service
 		RestTemplate restTemplateDoctor = new RestTemplate();
 		ResponseEntity<Doctor[]> responseDoctor = restTemplateDoctor.getForEntity("http://localhost:8080/hospital/api/doctor", Doctor[].class);
 
 		Doctor doctorArray[] = responseDoctor.getBody();
 		List<Doctor> doctorList = Arrays.asList(doctorArray);
 		
-		// This block get an order type to be updated
+		// This block gets a consultation to be updated
 		if (consultation_id > 0) {
 
-			// Generate new URI and append Consultationld to it
+			// Generate a new URI and append consultation_id to it
 			String uri = defaultURI + "/" + consultation_id;
 
-			// Get an order type from the web service
+			// Get a consultation from the web service
 			RestTemplate restTemplate = new RestTemplate();
 			consultation = restTemplate.getForObject(uri, Consultation.class);
 
@@ -124,11 +126,11 @@ public class ConsultationMenuController {
 			pageTitle = "Edit Consultation";
 		}
 
-		// Attach value to pass to front end
+		// Attach values to pass to the front end
 		model.addAttribute("patients", patientList);
 		model.addAttribute("doctors", doctorList);
 		model.addAttribute("consultation", consultation);
-		model.addAttribute("pageTitle",pageTitle);
+		model.addAttribute("pageTitle", pageTitle);
 
 		return "new_consultation";
 	}

@@ -21,63 +21,57 @@ public class DoctorMenuController {
 
 	@GetMapping("/doctor/list")
 	public String getDoctor(Model model) {
-		
-		// The URI for GET order types
+		// The URI for GET doctors
 		String uri = "http://localhost:8080/hospital/api/doctor";
 
-		// Get a list order types from the web service
+		// Get a list of doctors from the web service
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<Doctor[]> response = restTemplate.getForEntity(uri, Doctor[].class);
 
-		// Parse JSON data to array of object
-		Doctor doctor[] = response.getBody();
+		// Parse JSON data into an array of objects
+		Doctor[] doctorArray = response.getBody();
 
-		// Parse an array to a list object
-		List<Doctor> doctorList = Arrays.asList(doctor);
+		// Convert the array into a list
+		List<Doctor> doctorList = Arrays.asList(doctorArray);
 
-		// Attach list to model as attribute
-		model.addAttribute("doctor",doctorList);
+		// Attach the doctor list to the model as an attribute
+		model.addAttribute("doctor", doctorList);
 
 		return "doctor";
 	}
-	
-	/**
-	* This method will update or add an order type.
-	*
-	* @param orderType
-	* @return
-	*/
 
+	/**
+	 * This method will update or add a doctor.
+	 *
+	 * @param doctor
+	 * @return
+	 */
 	@RequestMapping("/doctor/save")
-	public String updateDoctor (@ModelAttribute Doctor doctor) {
+	public String updateDoctor(@ModelAttribute Doctor doctor) {
 
 		// Create a new RestTemplate
 		RestTemplate restTemplate = new RestTemplate();
 
-		// Create request body
+		// Create a request body
 		HttpEntity<Doctor> request = new HttpEntity<Doctor>(doctor);
 
-		String DoctorResponse = "";
+		String doctorResponse = "";
 
 		if (doctor.getDoctor_id() > 0) {
-			
-			// This block update an new order type and
+			// This block updates an existing doctor
 
-			// Send request as PUT
+			// Send the request as a PUT
 			restTemplate.put(defaultURI, request, Doctor.class);
-		} 
-		
-		else {
-			
-			// This block add a new order type
+		} else {
+			// This block adds a new doctor
 
-			// send request as POST
-			DoctorResponse = restTemplate.postForObject(defaultURI, request, String.class);
+			// Send the request as a POST
+			doctorResponse = restTemplate.postForObject(defaultURI, request, String.class);
 		}
 
-		System.out.println(DoctorResponse);
+		System.out.println(doctorResponse);
 
-		// Redirect request to display a list of order type
+		// Redirect the request to display a list of doctors
 		return "redirect:/doctor/list";
 	}
 }

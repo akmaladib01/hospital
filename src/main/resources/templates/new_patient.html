@@ -6,9 +6,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
   <title>REST Consumer</title>
 
+  <!-- Bootstrap CSS -->
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  <!-- jQuery -->
   <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <!-- Bootstrap JS -->
   <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 
@@ -41,7 +45,7 @@
             </div>
           </div>
 
-	  <div class="form-group row">
+          <div class="form-group row">
             <label class="col-sm-3 col-form-label" for="patient_address">Address</label>
             <div class="col-sm-9">
               <input type="text" th:field="*{patient_address}" minlength="2" maxlength="256" class="form-control"
@@ -49,7 +53,7 @@
             </div>
           </div>
 
-	  <div class="form-group row">
+          <div class="form-group row">
             <label class="col-sm-3 col-form-label" for="patient_age">Age</label>
             <div class="col-sm-9">
               <input type="text" th:field="*{patient_age}" minlength="2" maxlength="256" class="form-control"
@@ -57,16 +61,16 @@
             </div>
           </div>
 
-	<div class="form-group row">
-  <label class="col-sm-3 col-form-label" for="patient_gender">Gender</label>
-  <div class="col-sm-9">
-    <select th:field="*{patient_gender}" class="form-control" id="patient_gender">
-      <option value="">Select Gender</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-    </select>
-  </div>
-</div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="patient_gender">Gender</label>
+            <div class="col-sm-9">
+              <select th:field="*{patient_gender}" class="form-control" id="patient_gender">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </div>
 
           <div class="text-center">
             <input type="submit" value="Save" class="btn btn-primary btn-sm mr-2" />
@@ -81,7 +85,9 @@
 
   <script type="text/javascript">
     $(document).ready(function () {
+      // Cancel button click event
       $("#btnCancel").on("click", function () {
+        // Redirect to the patient list page
         window.location = "[[@{/patient/list}]]";
       });
     });

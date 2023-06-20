@@ -44,14 +44,13 @@ public class PatientMenuController {
 	}
 	
 	/**
-	* This method will update or add a patient.
-	*
-	* @param patient
-	* @return
-	*/
-
+	 * This method will update or add a patient.
+	 *
+	 * @param patient
+	 * @return
+	 */
 	@RequestMapping("/patient/save")
-	public String updatePatient (@ModelAttribute Patient patient) {
+	public String updatePatient(@ModelAttribute Patient patient) {
 
 		// Create a new RestTemplate
 		RestTemplate restTemplate = new RestTemplate();
@@ -80,15 +79,14 @@ public class PatientMenuController {
 	}
 	
 	/**
-	 *This method gets a patient
+	 * This method gets a patient.
 	 *
-	 *@param patient_id
-	 *@param model
-	 *@return
+	 * @param patient_id
+	 * @param model
+	 * @return
 	 */
-
 	@GetMapping("/patient/{patient_id}")
-	public String getPatient (@PathVariable Integer patient_id, Model model) {
+	public String getPatient(@PathVariable Integer patient_id, Model model) {
 
 		String pageTitle = "New Patient";
 		Patient patient = new Patient();
@@ -109,17 +107,17 @@ public class PatientMenuController {
 
 		// Attach values to pass to the front end
 		model.addAttribute("patient", patient);
-		model.addAttribute("pageTitle",pageTitle);
+		model.addAttribute("pageTitle", pageTitle);
 
 		return "new_patient";
 	}
 	
 	/**
-	*This method deletes a patient
-	*
-	* @param patient_id
-	* @return
-	*/
+	 * This method deletes a patient.
+	 *
+	 * @param patient_id
+	 * @return
+	 */
 	@RequestMapping("/patient/delete/{patient_id}")
 	public String deletePatient(@PathVariable Integer patient_id) {
 		

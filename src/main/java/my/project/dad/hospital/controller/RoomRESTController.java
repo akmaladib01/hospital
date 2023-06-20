@@ -31,10 +31,10 @@ public class RoomRESTController {
 	}
 	
 	// GET Room by ID
-	@GetMapping ("{Room_id}")
+	@GetMapping("{room_name}")
 	public Room getRoom(@PathVariable String room_name) {
-		Room Room = roomRepository.findById(room_name).get();
-		return Room;
+		Room room = roomRepository.findById(room_name).get();
+		return room;
 	}
 	
 	// POST (insert) new Room
@@ -50,7 +50,7 @@ public class RoomRESTController {
 	}
 	
 	// DELETE Room by ID
-	@DeleteMapping("{Room_id}")
+	@DeleteMapping("{room_name}")
 	public ResponseEntity<HttpStatus> deleteRoom(@PathVariable String room_name) {
 		roomRepository.deleteById(room_name);
 		return new ResponseEntity<>(HttpStatus.OK);

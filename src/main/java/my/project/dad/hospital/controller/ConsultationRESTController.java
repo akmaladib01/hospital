@@ -26,32 +26,32 @@ public class ConsultationRESTController {
 	
 	@GetMapping
 	public List<Consultation> getConsultations() {
-		
+		// Get all consultations
 		return consultationRepository.findAll();
 	}
 	
-	@GetMapping ("{consultation_id}")
+	@GetMapping("{consultation_id}")
 	public Consultation getConsultation(@PathVariable int consultation_id) {
-		
+		// Get a specific consultation by its ID
 		Consultation consultation = consultationRepository.findById(consultation_id).get();
 		return consultation;
 	}
 	
-	@PostMapping()
+	@PostMapping
 	public Consultation insertConsultation(@RequestBody Consultation consultation) {
-		
+		// Insert a new consultation
 		return consultationRepository.save(consultation);
 	}
 	
-	@PutMapping()
+	@PutMapping
 	public Consultation updateConsultation(@RequestBody Consultation consultation) {
-		
+		// Update an existing consultation
 		return consultationRepository.save(consultation);
 	}
 	
-	@DeleteMapping("{Consultation_id}")
+	@DeleteMapping("{consultation_id}")
 	public ResponseEntity<HttpStatus> deleteConsultation(@PathVariable int consultation_id) {
-		
+		// Delete a consultation by its ID
 		consultationRepository.deleteById(consultation_id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

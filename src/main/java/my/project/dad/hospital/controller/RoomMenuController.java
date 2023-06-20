@@ -14,8 +14,6 @@ import my.project.dad.hospital.model.Room;
 @Controller
 public class RoomMenuController {
 
-	private String defaultURI = "http://localhost:8080/hospital/api/room";
-
 	@GetMapping("/room/list")
 	public String getRoom(Model model) {
 
